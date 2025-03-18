@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app
+  labels:
+    app: backend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+        - name: backend-app
+          image: mutuwa12/backendapp:v3  # Change this to match your backend image
+          ports:
+            - containerPort: 8000  # Django runs on port 8000 by default
+          # env:
+          #   - name: DJANGO_SETTINGS_MODULE
+          #     value: "myproject.settings"  # Change to your Django settings module
+          #   - name: DATABASE_URL
+          #     value: "postgres://user:password@db-host:5432/dbname"  # Adjust DB connection
+      imagePullSecrets:
+        - name: regcred  # Pulls from private registry if needed
